@@ -1,0 +1,229 @@
+# ============================================
+# Octopad - Next.js Dashboard Project
+# ============================================
+# This .gitignore file is designed for a Next.js 14 project with TypeScript,
+# NextAuth authentication, and Bootstrap UI components.
+# ============================================
+
+# ============================================
+# Dependencies
+# ============================================
+# Node modules contain all installed packages and should never be committed
+# as they can be regenerated from package.json and yarn.lock
+/node_modules
+/.pnp
+.pnp.js
+.pnp.*.js
+
+# ============================================
+# Next.js Build Output
+# ============================================
+# The .next directory contains compiled and optimized production builds
+# These are generated during 'next build' and should not be committed
+/.next/
+/out/
+
+# ============================================
+# Production Build Files
+# ============================================
+# General build output directory (if used)
+/build
+/dist
+
+# ============================================
+# Environment Variables
+# ============================================
+# Environment files contain sensitive information like API keys, secrets,
+# and database credentials. These should NEVER be committed to version control.
+.env
+.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# ============================================
+# NextAuth & Authentication
+# ============================================
+# NextAuth secret files and session storage (if using file-based sessions)
+# These contain sensitive authentication data
+.nextauth/
+sessions/
+
+# ============================================
+# TypeScript
+# ============================================
+# TypeScript build info files contain incremental compilation data
+# These are generated automatically and can be regenerated
+*.tsbuildinfo
+next-env.d.ts
+
+# ============================================
+# Testing
+# ============================================
+# Test coverage reports and test output
+/coverage
+/.nyc_output
+*.lcov
+
+# ============================================
+# Logs
+# ============================================
+# Log files from package managers and runtime
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# ============================================
+# Debugging
+# ============================================
+# Debug files and crash dumps
+*.pid
+*.seed
+*.pid.lock
+.vscode-test/
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ============================================
+# OS Files
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# Deployment Platforms
+# ============================================
+# Vercel (Next.js recommended hosting platform)
+.vercel
+
+# Netlify
+.netlify
+
+# AWS
+.aws-sam/
+
+# ============================================
+# Cache & Temporary Files
+# ============================================
+# Package manager caches
+.npm
+.eslintcache
+.stylelintcache
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Next.js cache
+.next/cache
+
+# Turbo (if using Turborepo)
+.turbo
+
+# ============================================
+# Security & Certificates
+# ============================================
+# Private keys and certificates should never be committed
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+secrets/
+*.secret
+
+# ============================================
+# Database Files
+# ============================================
+# Local database files (if using SQLite or similar)
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# ============================================
+# Backup Files
+# ============================================
+# Backup files created by editors or tools
+*.bak
+*.backup
+*.old
+*.orig
+*.tmp
+
+# ============================================
+# Miscellaneous
+# ============================================
+# Lock files (uncomment if you want to ignore them)
+# Note: yarn.lock should typically be committed for consistency
+# package-lock.json
+# pnpm-lock.yaml
+
+# Storybook build outputs
+storybook-static
+
+# Temporary folders
+tmp/
+temp/

@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: #e0e0e0;
+  background: #1B1127;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Override Bootstrap modal dark theme */
+.modal-content {
+  background-color: #1a1a2e !important;
+  border-color: #16213e !important;
+}
+
+.modal-header {
+  border-bottom-color: #1B1127 !important;
+}
+
+.modal-footer {
+  border-top-color: #1B1127 !important;
+}
+
+.form-label {
+  color: #e0e0e0 !important;
+}
+
+.text-muted {
+  color: #999 !important;
+}
+

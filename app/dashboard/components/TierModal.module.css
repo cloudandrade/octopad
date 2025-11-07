@@ -1,0 +1,80 @@
+.modalContent {
+  background: #1a1a2e;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+}
+
+.modalHeader {
+  background: #16213e;
+  border-bottom: 1px solid #1B1127;
+  color: #e0e0e0;
+}
+
+.modalHeader .btn-close {
+  filter: invert(1);
+}
+
+.modalBody {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+.modalFooter {
+  background: #16213e;
+  border-top: 1px solid #1B1127;
+}
+
+.formControl {
+  background: #1B1127;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+}
+
+.formControl:focus {
+  background: #1B1127;
+  border-color: #667eea;
+  color: #e0e0e0;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.formControl::placeholder {
+  color: #666;
+}
+
+.copyButton {
+  background: #0f3460;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+}
+
+.copyButton:hover {
+  background: #16213e;
+  border-color: #0f3460;
+  color: #e0e0e0;
+}
+
+.saveButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  font-weight: 500;
+}
+
+.saveButton:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
+  color: white;
+}
+
+.cancelButton {
+  background: #1B1127;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+}
+
+.cancelButton:hover {
+  background: #16213e;
+  border-color: #1B1127;
+  color: #e0e0e0;
+}
+
+

@@ -1,0 +1,25 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1B1127 0%, #16213e 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.loadingContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1B1127 0%, #16213e 100%);
+}
+
+.loading {
+  color: white;
+  font-size: 18px;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem 0;
+  overflow-y: auto;
+}

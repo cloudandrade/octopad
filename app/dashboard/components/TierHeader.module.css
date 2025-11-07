@@ -1,0 +1,43 @@
+.tierHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  min-height: 2rem;
+}
+
+.tierName {
+  color: #e0e0e0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.tierName:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.addNameButton {
+  background: transparent;
+  border: 1px dashed #667eea;
+  color: #667eea;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addNameButton:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: #5568d3;
+  color: #5568d3;
+}
+
+
