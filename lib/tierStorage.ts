@@ -169,6 +169,38 @@ export function deletePadFromTier(tierId: string, padId: string): void {
   }
 }
 
+export function deleteTier(tierId: string, userId?: string): void {
+  const tiers = getTiers()
+  const tier = tiers.find((t) => t.id === tierId)
+  if (!tier) return
+  
+  // Remover tier da lista
+  const filteredTiers = tiers.filter((t) => t.id !== tierId)
+  
+  // Reordenar posições
+  filteredTiers.forEach((t, index) => {
+    t.position = index
+  })
+  
+  saveTiers(filteredTiers)
+  
+  // Se o tier tinha nome, remover do banco de dados
+  const hasName = tier.name && tier.name.trim().length > 0
+  if (hasName && userId) {
+    // Remover do banco do usuário
+    import('./userTiersApi').then(({ deleteUserTier }) => {
+      deleteUserTier(userId, tierId).catch(console.error)
+    })
+    
+    // Remover do banco compartilhado (se existir)
+    if (tier.shareCode) {
+      import('./tierStorageApi').then(({ deleteSharedTier }) => {
+        deleteSharedTier(tier.shareCode).catch(console.error)
+      })
+    }
+  }
+}
+
 export function getPadAtPosition(tierId: string, position: number): Pad | null {
   const tiers = getTiers()
   const tier = tiers.find((t) => t.id === tierId)

@@ -77,4 +77,77 @@
   color: #e0e0e0;
 }
 
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.deleteButton {
+  background: #dc3545;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  background: #c82333;
+  color: white;
+  transform: scale(1.1);
+}
+
+.deleteAlert {
+  background: #1a1a2e;
+  border: 1px solid #dc3545;
+  color: #e0e0e0;
+  border-radius: 8px;
+}
+
+.deleteAlert .alert-heading {
+  color: #dc3545;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.confirmDeleteButton {
+  background: #dc3545;
+  border: none;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+}
+
+.confirmDeleteButton:hover {
+  background: #c82333;
+  color: white;
+}
+
+.cancelDeleteButton {
+  background: #1B1127;
+  border: 1px solid #16213e;
+  color: #e0e0e0;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+}
+
+.cancelDeleteButton:hover {
+  background: #16213e;
+  border-color: #1B1127;
+  color: #e0e0e0;
+}
+
 

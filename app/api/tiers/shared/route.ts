@@ -94,6 +94,58 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({ tier })
 }
 
+// DELETE: Deletar tier compartilhado
+export async function DELETE(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const shareCode = searchParams.get('code')
+
+  if (!shareCode) {
+    return NextResponse.json(
+      { error: 'Código de compartilhamento é obrigatório' },
+      { status: 400 }
+    )
+  }
+
+  const db = getDb()
+
+  // Se banco de dados estiver configurado, usar PostgreSQL
+  if (db) {
+    try {
+      const shareCodeUpper = shareCode.toUpperCase()
+
+      // Deletar tier compartilhado
+      await db`
+        DELETE FROM shared_tiers
+        WHERE share_code = ${shareCodeUpper}
+      `
+
+      return NextResponse.json({ success: true })
+    } catch (error: any) {
+      console.error('Erro ao deletar tier compartilhado:', error)
+      
+      // Verificar se é erro de tabela não encontrada
+      if (error?.code === '42P01' || error?.message?.includes('does not exist')) {
+        return NextResponse.json(
+          { 
+            error: 'Tabela shared_tiers não encontrada. Execute o SQL do arquivo supabase/schema.sql no Supabase SQL Editor.',
+            code: 'TABLE_NOT_FOUND'
+          },
+          { status: 500 }
+        )
+      }
+      
+      return NextResponse.json(
+        { error: 'Erro ao deletar tier compartilhado', details: error?.message },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Modo de desenvolvimento: remover do cache em memória
+  sharedTiersCache.delete(shareCode.toUpperCase())
+  return NextResponse.json({ success: true })
+}
+
 // POST: Salvar tier compartilhado
 export async function POST(request: NextRequest) {
   try {

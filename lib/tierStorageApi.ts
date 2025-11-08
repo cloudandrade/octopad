@@ -58,3 +58,25 @@ export async function getSharedTierByCode(shareCode: string): Promise<Tier | nul
   }
 }
 
+/**
+ * Deleta um tier compartilhado do servidor
+ */
+export async function deleteSharedTier(shareCode: string): Promise<boolean> {
+  try {
+    const response = await fetch(`/api/tiers/shared?code=${encodeURIComponent(shareCode.toUpperCase())}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      console.error('Erro ao deletar tier compartilhado:', error)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    console.error('Erro ao deletar tier compartilhado:', error)
+    return false
+  }
+}
+

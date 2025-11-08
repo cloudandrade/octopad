@@ -51,6 +51,28 @@ export async function saveUserTiers(userId: string, tiers: Tier[]): Promise<bool
 }
 
 /**
+ * Deleta um tier do usuário do banco de dados
+ */
+export async function deleteUserTier(userId: string, tierId: string): Promise<boolean> {
+  try {
+    const response = await fetch(`/api/users/${userId}/tiers/${tierId}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      console.error('Erro ao deletar tier do usuário:', error)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    console.error('Erro ao deletar tier do usuário:', error)
+    return false
+  }
+}
+
+/**
  * Sincroniza dados do usuário e seus tiers
  */
 export async function syncUser(

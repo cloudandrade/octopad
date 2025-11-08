@@ -112,6 +112,7 @@ export default function TierHeader({ tier, onUpdate, onDragStart }: TierHeaderPr
         onHide={handleModalClose}
         tier={tier}
         onSave={handleTierUpdated}
+        onDelete={handleTierUpdated}
       />
     </>
   )
