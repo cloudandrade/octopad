@@ -32,7 +32,7 @@
 .navActions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .dropdownContainer {
@@ -145,5 +145,142 @@
 
 .logoutButton:active {
   background: rgba(255, 255, 255, 0.15);
+}
+
+.helpButton {
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.helpButton:hover {
+  background: rgba(102, 126, 234, 0.3);
+  border-color: rgba(102, 126, 234, 0.5);
+  transform: scale(1.05);
+}
+
+.helpIcon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .brand {
+    gap: 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .brandName {
+    font-size: 1.2rem;
+  }
+
+  .navActions {
+    gap: 0.75rem;
+  }
+
+  .userSection {
+    gap: 0.5rem;
+  }
+
+  .userInfo {
+    display: none; /* Esconder nome e email em mobile */
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logoutButton {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .addButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .addIcon {
+    font-size: 1.25rem;
+  }
+
+  .helpButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .helpIcon {
+    font-size: 1.2rem;
+  }
+
+  .dropdown {
+    min-width: 180px;
+    right: 0;
+    left: auto;
+  }
+
+  .dropdownItem {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .brandName {
+    font-size: 1rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .logoutButton {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .addButton {
+    width: 32px;
+    height: 32px;
+  }
+
+  .addIcon {
+    font-size: 1.1rem;
+  }
+
+  .helpButton {
+    width: 32px;
+    height: 32px;
+  }
+
+  .helpIcon {
+    font-size: 1.1rem;
+  }
+
+  .dropdown {
+    min-width: 160px;
+  }
 }
 

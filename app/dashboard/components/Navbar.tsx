@@ -4,11 +4,13 @@ import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import styles from './Navbar.module.css'
 import AddTierModal from './AddTierModal'
+import HelpBox from './HelpBox'
 
 export default function Navbar() {
   const { data: session } = useSession()
   const [showDropdown, setShowDropdown] = useState(false)
   const [showAddTierModal, setShowAddTierModal] = useState(false)
+  const [showHelpBox, setShowHelpBox] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -44,6 +46,15 @@ export default function Navbar() {
           </div>
           
           <div className={styles.navActions}>
+            <button
+              className={styles.helpButton}
+              onClick={() => setShowHelpBox(true)}
+              aria-label="Ajuda"
+              title="Ajuda"
+            >
+              <span className={styles.helpIcon}>❓</span>
+            </button>
+
             <div className={styles.dropdownContainer} ref={dropdownRef}>
               <button
                 className={styles.addButton}
@@ -98,6 +109,11 @@ export default function Navbar() {
           // Trigger a reload in PadGrid if needed
           window.dispatchEvent(new Event('tierAdded'))
         }}
+      />
+
+      <HelpBox
+        show={showHelpBox}
+        onHide={() => setShowHelpBox(false)}
       />
     </>
   )

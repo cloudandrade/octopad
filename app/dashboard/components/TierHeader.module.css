@@ -80,4 +80,45 @@
   color: rgba(102, 126, 234, 0.9);
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .tierName {
+    font-size: 1.1rem;
+  }
+
+  .tierNameContainer {
+    padding: 0.4rem 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .dragIcon {
+    font-size: 0.9rem;
+  }
+
+  .addNameButton {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tierName {
+    font-size: 1rem;
+  }
+
+  .tierNameContainer {
+    padding: 0.35rem 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .dragIcon {
+    font-size: 0.8rem;
+  }
+
+  .addNameButton {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.4rem;
+  }
+}
+
 

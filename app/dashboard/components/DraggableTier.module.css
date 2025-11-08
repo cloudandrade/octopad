@@ -40,3 +40,38 @@
   max-width: 300px;
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .draggableContent {
+    padding: 0.75rem 1.25rem;
+    min-width: 180px;
+    gap: 0.75rem;
+  }
+
+  .tierName {
+    font-size: 1rem;
+    max-width: 200px;
+  }
+
+  .dragIcon {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .draggableContent {
+    padding: 0.625rem 1rem;
+    min-width: 150px;
+    gap: 0.5rem;
+  }
+
+  .tierName {
+    font-size: 0.9rem;
+    max-width: 150px;
+  }
+
+  .dragIcon {
+    font-size: 1rem;
+  }
+}
+

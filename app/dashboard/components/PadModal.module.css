@@ -4,6 +4,45 @@
   color: #e0e0e0;
 }
 
+/* Mobile Responsive - Modal adjustments */
+@media (max-width: 768px) {
+  .modalContent {
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .modalBody {
+    padding: 1rem;
+  }
+
+  .modalHeader {
+    padding: 0.75rem 1rem;
+  }
+
+  .modalHeader .modal-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    margin: 0.25rem;
+    max-width: calc(100% - 0.5rem);
+  }
+
+  .modalBody {
+    padding: 0.75rem;
+  }
+
+  .modalHeader {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .modalHeader .modal-title {
+    font-size: 1rem;
+  }
+}
+
 .modalHeader {
   background: #16213e;
   border-bottom: 1px solid #1B1127;
@@ -74,5 +113,47 @@
 .deleteButton:hover {
   background: #c82333;
   color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .modalFooter {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footerButtons {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .saveButton,
+  .cancelButton {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalFooter {
+    padding: 0.75rem;
+  }
+
+  .footerButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footerButtons button {
+    width: 100%;
+  }
+
+  .saveButton,
+  .cancelButton {
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
 }
 

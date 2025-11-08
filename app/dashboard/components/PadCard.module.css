@@ -225,3 +225,62 @@
   transform: scale(1.1);
 }
 
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .padCard {
+    padding: 0.75rem;
+    min-height: 80px;
+  }
+
+  .padName {
+    font-size: 0.7rem;
+    top: -1.25rem;
+  }
+
+  .padWrapper:hover .padName {
+    font-size: 0.8rem;
+  }
+
+  .editButton,
+  .deleteButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cancelButton {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .padCard {
+    padding: 0.5rem;
+    min-height: 70px;
+  }
+
+  .padName {
+    font-size: 0.65rem;
+    top: -1rem;
+  }
+
+  .padWrapper:hover .padName {
+    font-size: 0.75rem;
+  }
+
+  .editButton,
+  .deleteButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cancelButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .deleteOverlay {
+    gap: 0.5rem;
+  }
+}
+
