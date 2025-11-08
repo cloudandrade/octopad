@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import PadGrid from './components/PadGrid'
+import LoadingScreen from '../components/LoadingScreen'
 import styles from './page.module.css'
 
 export default function DashboardPage() {
@@ -18,11 +19,7 @@ export default function DashboardPage() {
   }, [status, router])
 
   if (status === 'loading') {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.loading}>Carregando...</div>
-      </div>
-    )
+    return <LoadingScreen theme="dark" />
   }
 
   if (!session) {

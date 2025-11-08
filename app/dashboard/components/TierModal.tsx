@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap'
 import { Tier } from '@/types/tier'
 import { updateTier } from '@/lib/tierStorage'
@@ -29,10 +30,17 @@ export default function TierModal({
     }
   }, [tier, show])
 
-  const handleSave = () => {
+  const { data: session } = useSession()
+
+  const handleSave = async () => {
+    const trimmedName = name.trim()
+    const userId = session?.user?.id
+    
+    // Atualizar tier (passa userId para salvar no banco se tiver nome)
     updateTier(tier.id, {
-      name: name.trim(),
-    })
+      name: trimmedName,
+    }, userId)
+    
     onSave()
   }
 

@@ -4,6 +4,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import styles from './page.module.css'
+import LoadingScreen from './components/LoadingScreen'
 
 export default function LoginPage() {
   const { data: session, status } = useSession()
@@ -16,11 +17,7 @@ export default function LoginPage() {
   }, [status, router])
 
   if (status === 'loading') {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>Carregando...</div>
-      </div>
-    )
+    return <LoadingScreen />
   }
 
   return (

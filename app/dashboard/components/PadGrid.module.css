@@ -4,32 +4,37 @@
   margin: 0 auto;
 }
 
-.addTierButtonContainer {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-
-.addTierButton {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  color: white;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.addTierButton:hover {
-  background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
 .tierSection {
   margin-bottom: 2rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.tierSection.dragging {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.tierSection.dropZone::before {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #667eea, transparent);
+  border-radius: 2px;
+  z-index: 100;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .padRow {
@@ -38,7 +43,7 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   align-items: start;
-  padding-top: 1.5rem;
+  padding-top: 0.5rem;
 }
 
 .rowDivider {

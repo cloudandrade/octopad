@@ -18,19 +18,24 @@ export default function AddTierModal({
 }: AddTierModalProps) {
   const [code, setCode] = useState('')
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!code.trim()) {
       alert('Por favor, digite o código do tier')
       return
     }
 
-    const tier = addTierByCode(code.trim().toUpperCase())
-    if (tier) {
-      setCode('')
-      onAdd()
-      onHide()
-    } else {
-      alert('Código inválido ou tier não encontrado')
+    try {
+      const tier = await addTierByCode(code.trim().toUpperCase())
+      if (tier) {
+        setCode('')
+        onAdd()
+        onHide()
+      } else {
+        alert('Código inválido ou tier não encontrado')
+      }
+    } catch (error) {
+      console.error('Erro ao adicionar tier:', error)
+      alert('Erro ao adicionar tier. Tente novamente.')
     }
   }
 

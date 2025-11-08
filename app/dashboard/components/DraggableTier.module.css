@@ -1,0 +1,42 @@
+.draggableTier {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  user-select: none;
+}
+
+.draggableContent {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 200px;
+  backdrop-filter: blur(10px);
+}
+
+.dragIcon {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: -2px;
+  cursor: grab;
+}
+
+.dragIcon:active {
+  cursor: grabbing;
+}
+
+.tierName {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+

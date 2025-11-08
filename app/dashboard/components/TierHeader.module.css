@@ -2,8 +2,43 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   min-height: 2rem;
+}
+
+.tierNameContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.tierNameContainer:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.tierNameContainer:hover .tierName {
+  color: #667eea;
+}
+
+.dragIcon {
+  color: rgba(102, 126, 234, 0.5);
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: -2px;
+  user-select: none;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+  display: inline-block;
+  line-height: 1;
+}
+
+.tierNameContainer:hover .dragIcon {
+  opacity: 1;
+  color: rgba(102, 126, 234, 0.9);
 }
 
 .tierName {
@@ -13,31 +48,36 @@
   margin: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  user-select: none;
+  padding: 0;
 }
 
-.tierName:hover {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+.tierNameContainer.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.tierNameContainer.dragging .dragIcon {
+  opacity: 1;
+  color: rgba(102, 126, 234, 1);
 }
 
 .addNameButton {
   background: transparent;
-  border: 1px dashed #667eea;
-  color: #667eea;
-  font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border: 1px dashed rgba(102, 126, 234, 0.5);
+  color: rgba(102, 126, 234, 0.7);
+  font-size: 0.7rem;
+  font-weight: 400;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .addNameButton:hover {
   background: rgba(102, 126, 234, 0.1);
-  border-color: #5568d3;
-  color: #5568d3;
+  border-color: rgba(102, 126, 234, 0.7);
+  color: rgba(102, 126, 234, 0.9);
 }
 
 

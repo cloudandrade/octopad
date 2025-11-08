@@ -36,18 +36,75 @@ export function getTiers(): Tier[] {
   }
 }
 
+/**
+ * Carrega tiers do banco de dados e mescla com tiers do cache
+ * Tiers do banco aparecem primeiro, depois os do cache
+ */
+export async function loadTiersFromDatabase(userId: string): Promise<Tier[]> {
+  try {
+    const { getUserTiers } = await import('./userTiersApi')
+    const dbTiers = await getUserTiers(userId)
+    
+    // Buscar tiers do cache local
+    const cacheTiers = getTiers()
+    
+    // Separar tiers do cache que não estão no banco
+    const dbTierShareCodes = new Set(dbTiers.map(t => t.shareCode))
+    const cacheOnlyTiers = cacheTiers.filter(t => !dbTierShareCodes.has(t.shareCode))
+    
+    // Ordenar tiers do cache que não estão no banco
+    cacheOnlyTiers.sort((a, b) => a.position - b.position)
+    
+    // Combinar: tiers do banco primeiro, depois do cache
+    const allTiers = [...dbTiers, ...cacheOnlyTiers]
+    
+    // Reordenar posições
+    allTiers.forEach((tier, index) => {
+      tier.position = index
+    })
+    
+    // Salvar no localStorage
+    saveTiers(allTiers)
+    
+    return allTiers
+  } catch (error) {
+    console.error('Erro ao carregar tiers do banco:', error)
+    // Em caso de erro, retornar apenas tiers do cache
+    return getTiers()
+  }
+}
+
 export function saveTiers(tiers: Tier[]): void {
   if (typeof window === 'undefined') return
   
   localStorage.setItem(STORAGE_KEY, JSON.stringify(tiers))
 }
 
-export function updateTier(id: string, updates: Partial<Tier>): void {
+export function updateTier(id: string, updates: Partial<Tier>, userId?: string): void {
   const tiers = getTiers()
   const index = tiers.findIndex((t) => t.id === id)
   if (index !== -1) {
     tiers[index] = { ...tiers[index], ...updates }
     saveTiers(tiers)
+    
+    const updatedTier = tiers[index]
+    const hasName = updatedTier.name && updatedTier.name.trim().length > 0
+    
+    if (hasName && updatedTier.shareCode) {
+      // Salvar como compartilhado (para compartilhamento)
+      import('./tierStorageApi').then(({ saveSharedTier }) => {
+        saveSharedTier(updatedTier).catch(console.error)
+      })
+      
+      // Salvar no banco do usuário (se userId fornecido)
+      if (userId) {
+        import('./userTiersApi').then(({ saveUserTiers }) => {
+          // Buscar todos os tiers com nome para salvar
+          const namedTiers = tiers.filter(t => t.name && t.name.trim().length > 0)
+          saveUserTiers(userId, namedTiers).catch(console.error)
+        })
+      }
+    }
   }
 }
 
@@ -63,6 +120,15 @@ export function addPadToTier(tierId: string, pad: Omit<Pad, 'id'>): Pad {
   
   tier.pads.push(newPad)
   saveTiers(tiers)
+  
+  // Só salvar no banco se o tier tiver um nome (tiers sem nome ficam apenas no cache)
+  const hasName = tier.name && tier.name.trim().length > 0
+  if (hasName && tier.shareCode) {
+    import('./tierStorageApi').then(({ saveSharedTier }) => {
+      saveSharedTier(tier).catch(console.error)
+    })
+  }
+  
   return newPad
 }
 
@@ -75,6 +141,14 @@ export function updatePadInTier(tierId: string, padId: string, updates: Partial<
   if (padIndex !== -1) {
     tier.pads[padIndex] = { ...tier.pads[padIndex], ...updates }
     saveTiers(tiers)
+    
+    // Só salvar no banco se o tier tiver um nome (tiers sem nome ficam apenas no cache)
+    const hasName = tier.name && tier.name.trim().length > 0
+    if (hasName && tier.shareCode) {
+      import('./tierStorageApi').then(({ saveSharedTier }) => {
+        saveSharedTier(tier).catch(console.error)
+      })
+    }
   }
 }
 
@@ -85,6 +159,14 @@ export function deletePadFromTier(tierId: string, padId: string): void {
   
   tier.pads = tier.pads.filter((p) => p.id !== padId)
   saveTiers(tiers)
+  
+  // Só salvar no banco se o tier tiver um nome (tiers sem nome ficam apenas no cache)
+  const hasName = tier.name && tier.name.trim().length > 0
+  if (hasName && tier.shareCode) {
+    import('./tierStorageApi').then(({ saveSharedTier }) => {
+      saveSharedTier(tier).catch(console.error)
+    })
+  }
 }
 
 export function getPadAtPosition(tierId: string, position: number): Pad | null {
@@ -110,21 +192,19 @@ export function getTierPads(tierId: string): (Pad | null)[] {
   return grid
 }
 
-export function addTierByCode(shareCode: string): Tier | null {
-  // Buscar tier compartilhado
-  // Por enquanto, busca nos tiers existentes do usuário
-  // Em produção, isso viria de uma API que busca tiers compartilhados globalmente
+export async function addTierByCode(shareCode: string): Promise<Tier | null> {
+  // Primeiro, verificar se o tier existe localmente (para compatibilidade)
   const allTiers = getTiers()
-  const existingTier = allTiers.find((t) => t.shareCode === shareCode)
+  const localTier = allTiers.find((t) => t.shareCode === shareCode.toUpperCase())
   
-  if (existingTier) {
-    // Criar uma cópia do tier (não compartilhar a mesma referência)
+  if (localTier) {
+    // Criar uma cópia do tier local
     const newTierId = `tier-${Date.now()}`
     const newTier: Tier = {
       id: newTierId,
-      name: existingTier.name,
+      name: localTier.name,
       shareCode: generateShareCode(), // Novo código para o tier copiado
-      pads: existingTier.pads.map((pad, index) => ({
+      pads: localTier.pads.map((pad, index) => ({
         ...pad,
         id: `${pad.id}-${Date.now()}-${index}`, // Novo ID para os pads
         tierId: newTierId, // Novo tierId
@@ -137,8 +217,44 @@ export function addTierByCode(shareCode: string): Tier | null {
     return newTier
   }
   
-  // Em produção, aqui faria uma chamada à API para buscar tiers compartilhados
-  // Por enquanto, retorna null se não encontrar
+  // Buscar tier compartilhado no servidor
+  const { getSharedTierByCode } = await import('./tierStorageApi')
+  const sharedTier = await getSharedTierByCode(shareCode)
+  
+  if (sharedTier) {
+    // Debug: verificar se os pads estão presentes
+    console.log('Tier compartilhado encontrado:', {
+      name: sharedTier.name,
+      padsCount: sharedTier.pads?.length || 0,
+      pads: sharedTier.pads
+    })
+    // Criar uma cópia do tier compartilhado
+    const newTierId = `tier-${Date.now()}`
+    const timestamp = Date.now()
+    
+    // Copiar pads com todos os campos necessários
+    const copiedPads = (sharedTier.pads || []).map((pad: Pad, index: number) => ({
+      id: `${pad.id}-${timestamp}-${index}`, // Novo ID para os pads
+      name: pad.name || '',
+      url: pad.url || '',
+      iconUrl: pad.iconUrl || '',
+      position: pad.position ?? index, // Preservar posição original ou usar índice
+      tierId: newTierId, // Novo tierId
+    }))
+    
+    const newTier: Tier = {
+      id: newTierId,
+      name: sharedTier.name || '',
+      shareCode: generateShareCode(), // Novo código para o tier copiado
+      pads: copiedPads,
+      position: allTiers.length,
+    }
+    
+    allTiers.push(newTier)
+    saveTiers(allTiers)
+    return newTier
+  }
+  
   return null
 }
 
