@@ -20,8 +20,6 @@ const handler = NextAuth({
     signIn: '/',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  // Garante que a URL base seja detectada corretamente no Vercel
-  trustHost: true,
 })
 
 export { handler as GET, handler as POST }
