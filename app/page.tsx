@@ -2,13 +2,19 @@
 
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './page.module.css'
 import LoadingScreen from './components/LoadingScreen'
 
 export default function LoginPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const [isRegister, setIsRegister] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -20,14 +26,155 @@ export default function LoginPage() {
     return <LoadingScreen />
   }
 
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error || 'Erro ao registrar usuário')
+        setIsLoading(false)
+        return
+      }
+
+      // Após registro bem-sucedido, fazer login automaticamente
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setError('Erro ao fazer login após registro')
+        setIsLoading(false)
+      } else {
+        router.push('/dashboard')
+      }
+    } catch (err) {
+      setError('Erro ao registrar usuário')
+      setIsLoading(false)
+    }
+  }
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
+
+    setIsLoading(false)
+
+    if (result?.error) {
+      setError('Email ou senha incorretos')
+    } else {
+      router.push('/dashboard')
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.loginCard}>
         <h1 className={styles.title}>Bem-vindo ao Octopad</h1>
-        <p className={styles.subtitle}>Faça login com sua conta Google</p>
+        
+        <div className={styles.tabs}>
+          <button
+            className={`${styles.tab} ${!isRegister ? styles.active : ''}`}
+            onClick={() => {
+              setIsRegister(false)
+              setError('')
+            }}
+          >
+            Login
+          </button>
+          <button
+            className={`${styles.tab} ${isRegister ? styles.active : ''}`}
+            onClick={() => {
+              setIsRegister(true)
+              setError('')
+            }}
+          >
+            Registrar
+          </button>
+        </div>
+
+        {error && <div className={styles.error}>{error}</div>}
+
+        <form
+          onSubmit={isRegister ? handleRegister : handleLogin}
+          className={styles.form}
+        >
+          {isRegister && (
+            <div className={styles.formGroup}>
+              <label htmlFor="name">Nome</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                disabled={isLoading}
+              />
+            </div>
+          )}
+
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="password">Senha</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+              disabled={isLoading}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className={styles.submitButton}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Carregando...' : isRegister ? 'Registrar' : 'Entrar'}
+          </button>
+        </form>
+
+        <div className={styles.divider}>
+          <span>ou</span>
+        </div>
+
         <button
           className={styles.googleButton}
           onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+          disabled={isLoading}
         >
           <svg
             className={styles.googleIcon}

@@ -39,10 +39,11 @@ CREATE TRIGGER update_shared_tiers_updated_at
 
 -- Criar tabela para usuários
 CREATE TABLE IF NOT EXISTS users (
-  id TEXT PRIMARY KEY, -- ID do NextAuth (Google ID)
+  id TEXT PRIMARY KEY, -- ID do NextAuth (Google ID ou UUID gerado)
   email TEXT UNIQUE NOT NULL,
   name TEXT,
   image TEXT,
+  password TEXT, -- Hash da senha (NULL para usuários do Google)
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

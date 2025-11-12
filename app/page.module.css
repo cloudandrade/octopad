@@ -20,14 +20,134 @@
 .title {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
   color: #1a1a1a;
 }
 
-.subtitle {
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
   font-size: 16px;
+  font-weight: 500;
   color: #666;
-  margin-bottom: 32px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: #667eea;
+}
+
+.tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.form {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.formGroup input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 12px;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  color: #c33;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.divider span {
+  padding: 0 16px;
+  color: #666;
+  font-size: 14px;
 }
 
 .googleButton {
@@ -47,13 +167,18 @@
   transition: all 0.2s ease;
 }
 
-.googleButton:hover {
+.googleButton:hover:not(:disabled) {
   background: #f8f9fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.googleButton:active {
+.googleButton:active:not(:disabled) {
   background: #f1f3f4;
+}
+
+.googleButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .googleIcon {
