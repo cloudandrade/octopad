@@ -67,8 +67,20 @@ export async function POST(request: NextRequest) {
     })
   } catch (error: any) {
     console.error('Erro ao registrar usuário:', error)
+    
+    // Mensagens de erro mais específicas
+    let errorMessage = 'Erro ao registrar usuário'
+    
+    if (error?.code === 'ENOTFOUND') {
+      errorMessage = 'Erro de conexão com o banco de dados. Verifique se a variável DATABASE_URL está configurada corretamente no Vercel.'
+    } else if (error?.code === 'ECONNREFUSED') {
+      errorMessage = 'Não foi possível conectar ao banco de dados. Verifique se o projeto Supabase está ativo.'
+    } else if (error?.message) {
+      errorMessage = `Erro ao registrar usuário: ${error.message}`
+    }
+    
     return NextResponse.json(
-      { error: 'Erro ao registrar usuário', details: error?.message },
+      { error: errorMessage, details: error?.message },
       { status: 500 }
     )
   }

@@ -72,8 +72,12 @@ const authOptions: NextAuthOptions = {
             name: user.name || null,
             image: user.image || null,
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error('Erro ao autenticar usuário:', error)
+          // Log mais detalhado para debug
+          if (error?.code === 'ENOTFOUND' || error?.code === 'ECONNREFUSED') {
+            console.error('Erro de conexão com banco de dados. Verifique DATABASE_URL.')
+          }
           return null
         }
       },

@@ -12,13 +12,35 @@ export function getDb() {
     return null
   }
 
+  // Validar formato básico da connection string
+  try {
+    const url = new URL(connectionString)
+    if (!url.hostname || !url.port) {
+      console.error('DATABASE_URL inválida: hostname ou porta ausentes')
+      return null
+    }
+  } catch (error) {
+    console.error('DATABASE_URL inválida: formato incorreto', error)
+    return null
+  }
+
   // Criar conexão apenas uma vez (singleton)
   if (!sql) {
-    sql = postgres(connectionString, {
-      max: 1, // Limitar conexões para evitar problemas
-      idle_timeout: 20,
-      connect_timeout: 10,
-    })
+    try {
+      sql = postgres(connectionString, {
+        max: 1, // Limitar conexões para evitar problemas
+        idle_timeout: 20,
+        connect_timeout: 10,
+        // Adicionar configurações para melhor diagnóstico
+        onnotice: () => {}, // Suprimir notices
+        transform: {
+          undefined: null,
+        },
+      })
+    } catch (error) {
+      console.error('Erro ao criar conexão com banco de dados:', error)
+      return null
+    }
   }
 
   return sql
